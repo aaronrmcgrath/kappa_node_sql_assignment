@@ -61,7 +61,7 @@ function appendDom(dataArray) {
   for (var i = 0; i < dataArray.length; i++) {
     $el.append('<div class="entry-box"> <p class="container entry"> ENTRY' + '   ' +
     dataArray[i].id + ': ' +
-    dataArray[i].name + '  ' +
+    dataArray[i].name + '  ' + '<br />' +
     dataArray[i].address + ' ' +
     dataArray[i].city + ', ' +
     dataArray[i].state + ' ' +
