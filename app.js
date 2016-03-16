@@ -9,7 +9,7 @@ var connectionString = '';
 if(process.env.DATABASE_URL != undefined) {
     connectionString = process.env.DATABASE_URL + 'ssl';
 } else {
-    connectionString = 'postgres://localhost:5432/node-app';
+    connectionString = 'postgres://localhost:5432/kappa_node_sql_form';
 }
 
 app.use(bodyParser.json());
@@ -32,6 +32,8 @@ app.get('/people', function(req, res) {
             return res.json(results);
         });
 
+        // console.log('Server GET results: ',results);
+
         if(err) {
             console.log(err);
         }
@@ -41,12 +43,16 @@ app.get('/people', function(req, res) {
 app.post('/people', function(req, res) {
     var addPerson = {
         name: req.body.name,
-        address: req.body.address
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zip_code: req.body.zip_code
     };
+    console.log(req.body);
 
     pg.connect(connectionString, function(err, client, done) {
-        client.query("INSERT INTO people (name, address) VALUES ($1, $2) RETURNING id",
-            [addPerson.name, addPerson.address],
+        client.query("INSERT INTO people (name, address, city, state, zip_code) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+            [addPerson.name, addPerson.address, addPerson.city, addPerson.state, addPerson.zip_code],
             function (err, result) {
                 done();
 
@@ -59,6 +65,28 @@ app.post('/people', function(req, res) {
             });
     });
 
+});
+
+app.delete('/delEntry', function(req, res){
+
+  var entryID = req.body.id;
+
+  // console.log(entryID);
+  pg.connect(connectionString, function(err, client, done) {
+      var query = client.query('DELETE FROM "public"."people" WHERE "id"=$1;', [entryID],
+
+      function (err, result) {
+          done();
+
+          if(err) {
+              console.log("Error inserting data: ", err);
+              res.send(false);
+          } else {
+              res.send(result);
+          }
+      });
+      console.log('Entry ' + entryID + ' was deleted!');
+    });
 });
 
 app.get('/*', function(req, res) {

@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Hello SQL!</title>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/bootstrap.min.css.map" />
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <!-- SCRIPTS -->
     <script type="text/javascript" src="/vendors/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/clientapp.js"></script>
 </head>
+
 <body>
-    <h1>SQL in Node!</h1>
+    <h1 class="container jumbotron">SQL in Node!</h1>
 
     <form id="sql-form">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" />
 
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" />
+        <input type="text" id="address" name="address" required />
 
-        <button id="submit-button">Save to DB!</button>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required/>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required/>
+
+        <label for="zip">Zip:</label>
+        <input type="number" id="zip_code" name="zip_code" required/>
+
+        <br />
+
+        <button id="submit-button" class="btn">Save to DB!</button>
     </form>
+
+    <div class="container peopleData">
+
+    </div>
+
+    <div class="container console-toggle">
+
+      <!-- <button class="hide">Hide</button> -->
+      <button class="toggle btn">Toggle Data</button>
+
+    </div>
 
 </body>
 </html>
